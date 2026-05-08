@@ -7,37 +7,55 @@ exports.deposit = async (req , res)=>{
 
         const {
             phone,
-            amount
+            amount,
+            operator
         } = req.body;
 
-        const response = await pawapay.post('/deposits', {
+        const response = await pawapay.post(`${process.env.PAWAPAY_BASE_URL}/deposits`, {
 
             depositId: uuidv4(),
 
-            amount: amount,
+            amount:amount.toString(),
 
             currency: 'XOF',
 
             country: 'CIV',
 
-            correspondent: 'ORANGE_CI',
-
             payer: {
-                type: 'MSISDN',
-                address: {
-                    value: phone
+                type: 'MMO',
+                accountDetails: {
+                    phoneNumber: `225${phone}`,
+                    provider:operator
                 }
+            },
+            clientReferenceId : uuidv4(),
+            customerMessage: 'Paiement Ephod Athletes'
+        },
+        {
+            headers:{
+                Authorization:`Bearer ${process.env.PAWAPAY_API_TOKEN}`,
+                'Content-Type':'application/json'
             }
+        }
+    
+    );
+
+        console.log(data);
+        
+        res.json({
+            success: true,
+            data: response.data
         });
 
-        res.json(response.data);
-
-    } catch (error) {
-
-        console.error(error.response?.data);
+    } catch(error)
+    {
+        console.error(
+            error.response?.data || error.message
+        );
 
         res.status(500).json({
-            error: error.message
+            success: false,
+            error: error.response?.data || error.message
         });
     }
-}
+};
