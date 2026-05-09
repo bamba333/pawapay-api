@@ -11,7 +11,7 @@ exports.deposit = async (req , res)=>{
             operateur
         } = req.body;
 
-        const response = await pawapay.post(`${process.env.PAWAPAY_BASE_URL}/deposits`, {
+        const response = await pawapay.post('/deposits', {
 
             depositId: uuidv4(),
 
@@ -30,12 +30,6 @@ exports.deposit = async (req , res)=>{
             },
             clientReferenceId : uuidv4(),
             customerMessage: 'Paiement'
-        },
-        {
-            headers:{
-                Authorization:`Bearer ${process.env.PAWAPAY_API_TOKEN}`,
-                'Content-Type':'application/json'
-            }
         }
     
     );
