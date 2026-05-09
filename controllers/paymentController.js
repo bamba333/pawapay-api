@@ -44,7 +44,8 @@ exports.deposit = async (req, res) => {
 
         res.json({
             success: true,
-            data: response.data
+            depositId : payload.depositId,
+            pawapay : response.data
         });
 
     }
