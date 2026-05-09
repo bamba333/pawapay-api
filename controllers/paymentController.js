@@ -11,7 +11,7 @@ exports.deposit = async (req , res)=>{
             operateur
         } = req.body;
 
-        const response = await pawapay.post('/deposits', {
+        const response = await pawapay.post('/v2/deposits', {
 
             depositId: uuidv4(),
 
@@ -28,7 +28,6 @@ exports.deposit = async (req , res)=>{
                     provider:operateur
                 }
             },
-            clientReferenceId : uuidv4(),
             customerMessage: 'Paiement'
         }
     
