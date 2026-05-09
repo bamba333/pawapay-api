@@ -7,15 +7,15 @@ exports.deposit = async (req , res)=>{
 
         const {
             phone,
-            amount,
-            operator
+            montant,
+            operateur
         } = req.body;
 
         const response = await pawapay.post(`${process.env.PAWAPAY_BASE_URL}/deposits`, {
 
             depositId: uuidv4(),
 
-            amount:amount.toString(),
+            amount:montant.toString(),
 
             currency: 'XOF',
 
@@ -25,7 +25,7 @@ exports.deposit = async (req , res)=>{
                 type: 'MMO',
                 accountDetails: {
                     phoneNumber: `225${phone}`,
-                    provider:operator
+                    provider:operateur
                 }
             },
             clientReferenceId : uuidv4(),
@@ -40,7 +40,7 @@ exports.deposit = async (req , res)=>{
     
     );
 
-        console.log(data);
+        console.log(response.data);
         
         res.json({
             success: true,
