@@ -7,6 +7,7 @@ exports.deposit = async (req, res) => {
     try {
 
         const {
+            userId,
             phone,
             montant,
             operateur
@@ -44,8 +45,7 @@ exports.deposit = async (req, res) => {
 
         res.json({
             success: true,
-            depositId : payload.depositId,
-            pawapay : response.data
+            data: response.data
         });
 
     }
