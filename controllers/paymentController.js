@@ -1,9 +1,10 @@
 const pawapay = require('../services/pawapayService');
 
-const { v4 : uuidv4 } = require('uuid');
+const { v4: uuidv4 } = require('uuid');
 
-exports.deposit = async (req , res)=>{
-        try {
+exports.deposit = async (req, res) => {
+
+    try {
 
         const {
             phone,
@@ -11,36 +12,43 @@ exports.deposit = async (req , res)=>{
             operateur
         } = req.body;
 
-        const response = await pawapay.post('/v2/deposits', {
+        const payload = {
 
             depositId: uuidv4(),
 
-            amount:montant.toString(),
+            amount: montant.toString(),
 
             currency: 'XOF',
 
-            country: 'CIV',
-
             payer: {
+
                 type: 'MMO',
+
                 accountDetails: {
+
                     phoneNumber: `225${phone}`,
-                    provider:operateur
+
+                    provider: operateur
                 }
-            },
-            customerMessage: 'Paiement'
-        }
-    
-    );
+            }
+        };
+
+        console.log(payload);
+
+        const response = await pawapay.post(
+            '/v2/deposits',
+            payload
+        );
 
         console.log(response.data);
-        
+
         res.json({
             success: true,
             data: response.data
         });
 
-    } catch(error)
+    }
+    catch(error)
     {
         console.error(
             error.response?.data || error.message
