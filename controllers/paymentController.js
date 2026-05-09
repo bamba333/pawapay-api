@@ -29,7 +29,7 @@ exports.deposit = async (req , res)=>{
                 }
             },
             clientReferenceId : uuidv4(),
-            customerMessage: 'Paiement Ephod Athletes'
+            customerMessage: 'Paiement'
         },
         {
             headers:{
