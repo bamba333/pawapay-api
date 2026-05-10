@@ -2,6 +2,7 @@ const pawapay = require('../services/pawapayService');
 
 const { v4: uuidv4 } = require('uuid');
 
+global.payments = global.payments || {}
 exports.deposit = async (req, res) => {
 
     try {
@@ -35,7 +36,13 @@ exports.deposit = async (req, res) => {
         };
 
         console.log(payload);
-
+        global.payments[payload.depositId] = {
+            userId,
+            phone,
+            montant,
+            operateur
+        };
+        
         const response = await pawapay.post(
             '/v2/deposits',
             payload
