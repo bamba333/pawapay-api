@@ -3,8 +3,8 @@ const axios = require('axios');
 exports.handleWebhook = async (req , res) =>{
     try{
         
-        const payment = req.body[0];
-        if(payment.status === 'COMPLETED'){
+        const data = req.body[0];
+        if(data.status === 'COMPLETED'){
 
             // RECUPERER LES INFORMATIONS DU PAIEMENT
             const amount = data.amount;
