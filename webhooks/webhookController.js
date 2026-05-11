@@ -16,16 +16,7 @@ exports.handleWebhook = async (req , res) =>{
             const provider = data.payer.accountDetails.provider;
             const providerTransactionId = data.providerTransactionId;
 
-            console.log({
-            amount,
-            country,
-            currency,
-            depositId,
-            created,
-            phoneNumber,
-            provider,
-            providerTransactionId
-            });
+            console.log(amount);
 
         }
         res.status(200).json({
