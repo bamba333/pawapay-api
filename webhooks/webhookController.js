@@ -2,36 +2,31 @@ const axios = require('axios');
 
 exports.handleWebhook = async (req , res) =>{
     try{
-        console.log('WEBHOOK PAWAPAY');
-        console.log(req.body);
+        
         const payment = req.body[0];
         if(payment.status === 'COMPLETED'){
 
             // RECUPERER LES INFORMATIONS DU PAIEMENT
-            const localPayment = global.payments[payment.depositId];
-            if(localPayment){
-                await axios.post('https://https://unverdant-shily-mayson.ngrok-free.dev/payment/api/render',
-                    {
-                         userId:
-                        localPayment.userId,
+            const amount = data.amount;
+            const country = data.country;
+            const currency = data.currency;
+            const depositId = data.depositId;
+            const created = data.created;
+            const phoneNumber = data.payer.accountDetails.phoneNumber;
+            const provider = data.payer.accountDetails.provider;
+            const providerTransactionId = data.providerTransactionId;
 
-                        amount:
-                        localPayment.montant,
+            console.log({
+            amount,
+            country,
+            currency,
+            depositId,
+            created,
+            phoneNumber,
+            provider,
+            providerTransactionId
+            });
 
-                        operator:
-                        localPayment.operateur,
-
-                        phone:
-                        localPayment.phone,
-
-                        depositId:
-                        payment.depositId,
-
-                        status:
-                        payment.status
-                    }
-                );
-            }
         }
         res.status(200).json({
             success : true
