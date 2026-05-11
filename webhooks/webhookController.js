@@ -2,11 +2,11 @@ const axios = require('axios');
 
 exports.handleWebhook = async (req , res) =>{
     try{
-        console.log('WEBHOOK PAWAPAY');
+        
         console.log(req.body);
-        const payment = req.body[0];
+        let payment = req.body[0];
         if(payment.status === 'COMPLETED'){
-
+            console.log('WEBHOOK PAWAPAY');
             // RECUPERER LES INFORMATIONS DU PAIEMENT
             const localPayment = global.payments[payment.depositId];
             if(localPayment){
