@@ -4,7 +4,7 @@ exports.handleWebhook = async (req , res) =>{
     try{
         
         console.log(req.body);
-        let payment = req.body[0];
+        let payment = req.body;
         if(payment.status === 'COMPLETED'){
             console.log('WEBHOOK PAWAPAY');
             // RECUPERER LES INFORMATIONS DU PAIEMENT
