@@ -5,32 +5,30 @@ exports.handleWebhook = async (req , res) =>{
         
         let payment = req.body;
         if(payment.status === 'COMPLETED'){
-            console.log(payment.amount);
+            
             // RECUPERER LES INFORMATIONS DU PAIEMENT
-            const localPayment = global.payments[payment.depositId];
-            if(localPayment){
+            let amount = payment.amount;
+            let country = payment.country;
+            let currency = payment.currency;
+            let depositId = payment.depositId;
+            let created = payment.created;
+            let phoneNumber = payment.payer.accountDetails.phoneNumber;
+            let provider = payment.payer.accountDetails.provider;
+            let providerTransactionId = payment.providerTransactionId;
+
                 await axios.post('https://https://unverdant-shily-mayson.ngrok-free.dev/payment/api/render',
                     {
-                         userId:
-                        localPayment.userId,
-
-                        amount:
-                        localPayment.montant,
-
-                        operator:
-                        localPayment.operateur,
-
-                        phone:
-                        localPayment.phone,
-
-                        depositId:
-                        payment.depositId,
-
-                        status:
-                        payment.status
+                       montant: amount,
+                       pays : country,
+                       devise: currency,
+                       depositId: depositId,
+                       date: created,
+                       numero: phoneNumber,
+                       operateur: provider,
+                       operateurId: providerTransactionId
                     }
                 );
-            }
+            
         }
         res.status(200).json({
             success : true
@@ -44,3 +42,7 @@ exports.handleWebhook = async (req , res) =>{
         });
     }
 }
+
+module.exports = {
+    handleWebhook
+};
